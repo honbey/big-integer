@@ -132,3 +132,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Custom
+build/
+integer
+test
+a
