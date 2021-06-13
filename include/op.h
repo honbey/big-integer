@@ -21,7 +21,7 @@ static void div_(const Integer* left,
 
 
 static inline void set_(Integer* src, uint n) {
-  memset(src, 0, g_size_uint * (INT_LEN+4));
+  memset(src, 0, g_size_integer);
   src->length = 1;
   src->data[0] = n;
 }

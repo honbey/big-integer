@@ -8,10 +8,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
-/* typedef unsigned char uchar; */
-typedef unsigned int  uint;
-typedef unsigned long ulong;
+/* typedef uint8_t uchar; */
+typedef uint32_t uint;
+typedef uint64_t ulong;
 
 typedef struct {
   int sign;
