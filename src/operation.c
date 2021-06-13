@@ -15,6 +15,8 @@ Integer* plusMinus(const Integer* left, const Integer* right, int sign) {
  *  -  +  -       +               0
  *  -  -  -       -               1
  */
+  if (left == NULL || right == NULL) return NULL;
+
   Integer* dst = initInteger();
 
   int sign_xor = (left->sign ^ sign) ^ right->sign;
@@ -45,27 +47,21 @@ Integer* mulDiv(const Integer* left,
                 const Integer* right,
                 int op,
                 Integer* rem) {
+  if (left == NULL || right == NULL) return NULL;
+
   Integer* dst = NULL;
 
   if (op) {
     int cmp_value = cmp_(left, right);
-    if (rem /* != NULL */) {
-      if (cmp_value == -1) {
-        rem = copyInteger(left);
-        return initInteger();
-      }
-      else if (cmp_value == 0) {
-        rem = initInteger();
-        return toInteger(1);
-      }
-      else if (isOne_(right) == 0) {
-        rem = initInteger();
-        return copyInteger(left);
-      }
-    } else {
-      if (cmp_value == -1) return initInteger();
-      else if (cmp_value == 0) return toInteger(1);
-      else if (isOne_(right) == 0) return copyInteger(left);
+    if (cmp_value == -1) {
+      if (rem) rem = copyInteger(left);
+      return initInteger();
+    } else if (cmp_value == 0) {
+      if (rem) rem = initInteger();
+      return toInteger(1);
+    } else if (isOne_(right) == 0) {
+      if (rem) rem = initInteger();
+      return copyInteger(left);
     }
 
     dst = initInteger();
