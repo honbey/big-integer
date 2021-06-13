@@ -14,7 +14,10 @@ static int cmp_(const Integer* left, const Integer* right);
 static void add_(const Integer* left, const Integer* right, Integer* dst);
 static void sub_(const Integer* left, const Integer* right, Integer* dst);
 static void mul_(const Integer* left, const Integer* right, Integer* dst);
-static void div_(const Integer* left, const Integer* right, Integer* dst);
+static void div_(const Integer* left,
+                 const Integer* right,
+                 Integer* quot,
+                 Integer* rem);
 
 
 static inline void set_(Integer* src, uint n) {
@@ -116,7 +119,10 @@ static void mul_(const Integer* left, const Integer* right, Integer* dst) {
   }
 }
 
-static void div_(const Integer* left, const Integer* right, Integer* dst) {
+static void div_(const Integer* left,
+                 const Integer* right,
+                 Integer* quot,
+                 Integer* rem) {
   Integer* new_left  = copyInteger(left);
   Integer* new_right = copyInteger(right);
   
@@ -130,7 +136,7 @@ static void div_(const Integer* left, const Integer* right, Integer* dst) {
     if (l == r && len == 0) {
       sub_(tmp, new_right, new_left);
       set_(new_right, 1u);
-      add_(tmp, new_right, dst);
+      add_(tmp, new_right, quot);
       free(tmp);
       break;
     } else if (l <= r /* && len */) {
@@ -142,9 +148,9 @@ static void div_(const Integer* left, const Integer* right, Integer* dst) {
     Integer* tmp_right = l2Integer((long)l);
     if (len) lShift(tmp_right, len);
 
-    if (dst->length < tmp_right->length) add_(tmp_right, dst, tmp);
-    else add_(dst, tmp_right, tmp);
-    memcpy(dst, tmp, g_size_integer);
+    if (quot->length < tmp_right->length) add_(tmp_right, quot, tmp);
+    else add_(quot, tmp_right, tmp);
+    memcpy(quot, tmp, g_size_integer);
     
  /* because division use multiplication, it's necessary 
   * to prevent the disturbution of _dst_'s original data.*/
@@ -157,8 +163,10 @@ static void div_(const Integer* left, const Integer* right, Integer* dst) {
     free(tmp);
     free(tmp_right);
   }
-  printInteger(new_left, 10); // it's remainder
-  free(new_left);
+
+  if (rem) rem = new_left;
+  else free(new_left);
+  
   free(new_right);
 }
 

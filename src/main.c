@@ -14,11 +14,13 @@ int main(int argc, char const *argv[]) {
   Integer* m = generateInteger(800);
   printInteger(n, 10);
   printInteger(m, 10);
-  Integer* r = mulDiv(n, m, 1);
+  Integer* rem = initInteger();
+  Integer* r = mulDiv(n, m, 1, rem);
   printInteger(r, 10);
   free(n);
   free(m);
   free(r);
+  free(rem);
 
   return 0;
 }

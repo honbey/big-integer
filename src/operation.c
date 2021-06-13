@@ -41,17 +41,35 @@ Integer* plusMinus(const Integer* left, const Integer* right, int sign) {
   return dst;
 }
 
-Integer* mulDiv(const Integer* left, const Integer* right, int op) {
+Integer* mulDiv(const Integer* left,
+                const Integer* right,
+                int op,
+                Integer* rem) {
   Integer* dst = NULL;
 
   if (op) {
     int cmp_value = cmp_(left, right);
-    if (cmp_value == -1) return initInteger();
-    else if (cmp_value == 0) return toInteger(1);
-    else if (isOne_(right) == 0) return copyInteger(left);
+    if (rem /* != NULL */) {
+      if (cmp_value == -1) {
+        rem = copyInteger(left);
+        return initInteger();
+      }
+      else if (cmp_value == 0) {
+        rem = initInteger();
+        return toInteger(1);
+      }
+      else if (isOne_(right) == 0) {
+        rem = initInteger();
+        return copyInteger(left);
+      }
+    } else {
+      if (cmp_value == -1) return initInteger();
+      else if (cmp_value == 0) return toInteger(1);
+      else if (isOne_(right) == 0) return copyInteger(left);
+    }
 
     dst = initInteger();
-    div_(left, right, dst);
+    div_(left, right, dst, rem);
   } else {
     if (isZero_(left) == 0 || isZero_(right) == 0) return initInteger();
     else if (isOne_(left) == 0) return copyInteger(right);
@@ -62,19 +80,5 @@ Integer* mulDiv(const Integer* left, const Integer* right, int op) {
   }
 
   dst->sign = left->sign ^ right->sign;
-  return dst;
-}
-
-Integer* mod(const Integer* left, const Integer* right) {
-  Integer* dst = NULL;
-
-  int cmp_value = cmp_(left, right);
-  if (cmp_value == -1) return copyInteger(left);
-  else if (cmp_value == 0) return initInteger();
-
-  dst = copyInteger(left);
-  // mod_(left, right, dst);
-
-  dst->sign = left->sign;
   return dst;
 }

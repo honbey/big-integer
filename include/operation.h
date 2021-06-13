@@ -6,8 +6,10 @@
 
 
 Integer* plusMinus(const Integer* left, const Integer* right, int sign);
-Integer* mulDiv(const Integer* left, const Integer* right, int op);
-Integer* mod(const Integer* left, const Integer* right);
+Integer* mulDiv(const Integer* left,
+                const Integer* right,
+                int op,
+                Integer* rem);
 
 
 static void lShift(Integer* src, int n);
