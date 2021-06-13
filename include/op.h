@@ -123,8 +123,10 @@ static void div_(const Integer* left,
                  const Integer* right,
                  Integer* quot,
                  Integer* rem) {
-  Integer* new_left  = copyInteger(left);
-  Integer* new_right = copyInteger(right);
+  Integer* new_left = (Integer* )malloc(g_size_integer);
+  memcpy(new_left, left, g_size_integer);
+  Integer* new_right = (Integer* )malloc(g_size_integer);
+  memcpy(new_right, right, g_size_integer);
   
   int len = 0;
   ulong l = 0, r = (ulong)new_right->data[new_right->length-1];
@@ -166,7 +168,7 @@ static void div_(const Integer* left,
 
   if (rem) rem = new_left;
   else free(new_left);
-  
+
   free(new_right);
 }
 

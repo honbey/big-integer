@@ -23,7 +23,9 @@ void printInteger(const Integer* src, int base) {
   } else {
     if (src->sign) printf("-");
 
-    Integer* tmp = copyInteger(src);
+    Integer* tmp = (Integer* )malloc(g_size_integer);
+    memcpy(tmp, src, g_size_integer);
+
     char char_table[] = "0123456789ABCDEF";
     char *str = (char *)malloc(sizeof(char) * 2048);
     memset(str, 0, sizeof(char) * 2048);
@@ -42,7 +44,8 @@ uint modUint32(const Integer* left, uint right, Integer* dst) {
   ulong tmp = 0;
   uint *div = (uint *)(&tmp);
 
-  Integer* new_left = copyInteger(left);
+  Integer* new_left = (Integer* )malloc(g_size_integer);
+  memcpy(new_left, left, g_size_integer);
 
   for (int i = new_left->length-1; i >= 0; --i) {
     div[0] = new_left->data[i];

@@ -12,7 +12,6 @@ uint modUint32(const Integer* left, uint right, Integer* dst);
 
 
 static Integer* initInteger();
-static Integer* copyInteger(const Integer* src);
 static Integer* toInteger(int n);
 static Integer* l2Integer(long n);
 
@@ -21,12 +20,6 @@ static inline Integer* initInteger() {
   Integer* dst = (Integer* )malloc(g_size_integer);
   memset(dst, 0, g_size_integer);
   dst->length  = 1;
-  return dst;
-}
-
-static inline Integer* copyInteger(const Integer* src) {
-  Integer* dst = (Integer* )malloc(g_size_integer);
-  memcpy(dst, src, g_size_integer);
   return dst;
 }
 

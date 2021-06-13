@@ -49,30 +49,29 @@ Integer* mulDiv(const Integer* left,
                 Integer* rem) {
   if (left == NULL || right == NULL) return NULL;
 
-  Integer* dst = NULL;
+  Integer* dst = initInteger();
 
   if (op) {
     int cmp_value = cmp_(left, right);
     if (cmp_value == -1) {
-      if (rem) rem = copyInteger(left);
-      return initInteger();
+      if (rem) memcpy(rem, left, g_size_integer);
+      set_(dst, 0u);
     } else if (cmp_value == 0) {
-      if (rem) rem = initInteger();
-      return toInteger(1);
+      if (rem) set_(rem, 0u);
+      set_(dst, 1u);
     } else if (isOne_(right) == 0) {
-      if (rem) rem = initInteger();
-      return copyInteger(left);
+      if (rem) set_(rem, 0u);
+      memcpy(dst, left, g_size_integer);
+    } else if (isZero_(right) == 0) {
+      printf("\n*Error: The dividend is zero, program will return zero.*\n");
+    } else {
+      div_(left, right, dst, rem);
     }
-
-    dst = initInteger();
-    div_(left, right, dst, rem);
   } else {
-    if (isZero_(left) == 0 || isZero_(right) == 0) return initInteger();
-    else if (isOne_(left) == 0) return copyInteger(right);
-    else if (isOne_(right) == 0) return copyInteger(left);
-
-    dst = initInteger();
-    mul_(left, right, dst);
+    if (isZero_(left) == 0 || isZero_(right) == 0) set_(dst, 0u);
+    else if (isOne_(left) == 0) memcpy(dst, right, g_size_integer);
+    else if (isOne_(right) == 0) memcpy(dst, left, g_size_integer);
+    else mul_(left, right, dst);
   }
 
   dst->sign = left->sign ^ right->sign;
