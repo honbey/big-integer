@@ -212,7 +212,7 @@ Integer* gcdEuclid(const Integer* left, const Integer* right) {
 
   Integer* tmp = initInteger();
 
-  for (int i = 0; isZero_(new_left); ++i) {
+  while (isZero_(new_left)) {
     set_(tmp, 0u);
     div_(new_right, new_left, tmp, tmp);
 
