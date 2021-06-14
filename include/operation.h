@@ -13,6 +13,7 @@ Integer* mulDiv(const Integer* left,
 Integer* modExponent(const Integer* src,
                      const Integer* exp,
                      const Integer* mod);
+Integer* modInversion(const Integer* src, const Integer* mod);
 
 
 static void lShift(Integer* src, int n);
