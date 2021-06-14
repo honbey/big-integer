@@ -10,17 +10,18 @@ extern "C"
 int main(int argc, char const *argv[]) {
   // srand((unsigned)time(0));
 
-  Integer* n = generateInteger(2048);
-  Integer* m = generateInteger(800);
-  printInteger(n, 10);
-  printInteger(m, 10);
-  Integer* rem = initInteger();
-  Integer* r = mulDiv(n, m, 1, rem);
+  Integer* src = generateInteger(1024);
+  Integer* exp = generateInteger(256);
+  Integer* mod = generateInteger(512);
+  printInteger(src, 10);
+  printInteger(exp, 10);
+  printInteger(mod, 10);
+  Integer* r = modExponent(src, exp, mod);
   printInteger(r, 10);
-  free(n);
-  free(m);
+  free(src);
+  free(exp);
+  free(mod);
   free(r);
-  free(rem);
 
   return 0;
 }
