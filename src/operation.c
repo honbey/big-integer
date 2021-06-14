@@ -52,14 +52,7 @@ Integer* mulDiv(const Integer* left,
   Integer* dst = initInteger();
 
   if (op) {
-    int cmp_value = cmp_(left, right);
-    if (cmp_value == -1) {
-      if (rem) memcpy(rem, left, g_size_integer);
-      set_(dst, 0u);
-    } else if (cmp_value == 0) {
-      if (rem) set_(rem, 0u);
-      set_(dst, 1u);
-    } else if (isOne_(right) == 0) {
+    if (isOne_(right) == 0) {
       if (rem) set_(rem, 0u);
       memcpy(dst, left, g_size_integer);
     } else if (isZero_(right) == 0) {
@@ -75,5 +68,52 @@ Integer* mulDiv(const Integer* left,
   }
 
   dst->sign = left->sign ^ right->sign;
+  return dst;
+}
+
+Integer* modExponent(const Integer* src,
+                     const Integer* exp,
+                     const Integer* mod) {
+  Integer* dst = initInteger();
+
+  Integer* new_src = (Integer* )malloc(g_size_integer);
+  Integer* new_exp = (Integer* )malloc(g_size_integer);
+  memcpy(new_exp, exp, g_size_integer);
+
+  div_(src, mod, dst, new_src);
+  set_(dst, 1u);
+
+  Integer* two = toInteger(2);
+  Integer* tmp = (Integer* )malloc(g_size_integer);
+  while (isZero_(new_exp)) {
+    if (new_exp->data[0] & 1) {
+    /* memcpy(tmp, new_exp, g_size_integer);
+       sub_(tmp, one, new_exp); */
+
+      memcpy(tmp, dst, g_size_integer);
+      set_(dst, 0u);
+      mul_(tmp, new_src, dst);
+
+      set_(tmp, 0u);
+      div_(dst, mod, tmp, dst);
+    }
+    
+    memcpy(tmp, new_exp, g_size_integer);
+    set_(new_exp, 0u);
+    div_(tmp, two, new_exp, NULL);
+
+    memcpy(tmp, new_src, g_size_integer);
+    set_(new_src, 0u);
+    mul_(tmp, tmp, new_src);
+
+    set_(tmp, 0u);
+    div_(new_src, mod, tmp, new_src);
+  }
+
+  free(two);
+  free(tmp);
+  free(new_src);
+  free(new_exp);
+
   return dst;
 }
