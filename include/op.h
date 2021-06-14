@@ -56,10 +56,10 @@ static int cmp_(const Integer* left, const Integer* right) {
 }
 
 static void add_(const Integer* left, const Integer* right, Integer* dst) {
-  memcpy(dst, left, g_size_integer);
+  dst->length = left->length;
 
   ulong carry = 0u, sum = 0u;
-  for (int i = 0; i < right->length; ++i) {
+  for (int i = 0; i < left->length; ++i) {
     sum = (ulong)left->data[i]
         + (ulong)right->data[i]
         + carry;
@@ -72,10 +72,10 @@ static void add_(const Integer* left, const Integer* right, Integer* dst) {
 }
 
 static void sub_(const Integer* left, const Integer* right, Integer* dst) {
-  memcpy(dst, left, g_size_integer);
+  dst->length = left->length;
   
   ulong carry = 0u, sum = 0u;
-  for (int i = 0; i <= right->length; ++i) {
+  for (int i = 0; i < left->length; ++i) {
     if (
       (left->data[i]  >  right->data[i]) || 
       ((left->data[i] == right->data[i]) && (carry == 0))
@@ -136,9 +136,13 @@ static void div_(const Integer* left,
 
     Integer* tmp = initInteger();
     if (l == r && len == 0) {
-      sub_(tmp, new_right, new_left);
+      memcpy(tmp, new_left, g_size_integer);
+      sub_(new_right, tmp, new_left);
+
+      memcpy(tmp, quot, g_size_integer);
       set_(new_right, 1u);
       add_(tmp, new_right, quot);
+      
       free(tmp);
       break;
     } else if (l <= r /* && len */) {
@@ -153,7 +157,7 @@ static void div_(const Integer* left,
     if (quot->length < tmp_right->length) add_(tmp_right, quot, tmp);
     else add_(quot, tmp_right, tmp);
     memcpy(quot, tmp, g_size_integer);
-    
+
  /* because division use multiplication, it's necessary 
   * to prevent the disturbution of _dst_'s original data.*/
     set_(tmp, 0u);
@@ -166,9 +170,9 @@ static void div_(const Integer* left,
     free(tmp_right);
   }
 
-  if (rem) rem = new_left;
-  else free(new_left);
+  if (rem) memcpy(rem, new_left, g_size_integer);
 
+  free(new_left);
   free(new_right);
 }
 
