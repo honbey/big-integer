@@ -203,3 +203,25 @@ Integer* modInversion(const Integer* src, const Integer* mod) {
 
   return dst;
 }
+
+Integer* gcdEuclid(const Integer* left, const Integer* right) {
+  Integer* new_left = (Integer* )malloc(g_size_integer);
+  memcpy(new_left, left, g_size_integer);
+  Integer* new_right = (Integer* )malloc(g_size_integer);
+  memcpy(new_right, right, g_size_integer);
+
+  Integer* tmp = initInteger();
+
+  for (int i = 0; isZero_(new_left); ++i) {
+    set_(tmp, 0u);
+    div_(new_right, new_left, tmp, tmp);
+
+    memcpy(new_right, new_left, g_size_integer);
+    memcpy(new_left, tmp, g_size_integer);
+  }
+
+  free(tmp);
+  free(new_left);
+
+  return new_right;
+}

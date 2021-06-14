@@ -127,6 +127,8 @@ static void div_(const Integer* left,
   memcpy(new_left, left, g_size_integer);
   Integer* new_right = (Integer* )malloc(g_size_integer);
   memcpy(new_right, right, g_size_integer);
+
+  Integer* tmp = initInteger();
   
   int len = 0;
   ulong l = 0, r = (ulong)new_right->data[new_right->length-1];
@@ -134,16 +136,15 @@ static void div_(const Integer* left,
     l = (ulong)new_left->data[new_left->length-1];
     len = new_left->length - new_right->length;
 
-    Integer* tmp = initInteger();
+    set_(tmp, 0u);
     if (l == r && len == 0) {
       memcpy(tmp, new_left, g_size_integer);
-      sub_(new_right, tmp, new_left);
+      sub_(tmp, new_right, new_left);
 
       memcpy(tmp, quot, g_size_integer);
       set_(new_right, 1u);
       add_(tmp, new_right, quot);
-      
-      free(tmp);
+
       break;
     } else if (l <= r /* && len */) {
       len -= 1;
@@ -166,12 +167,12 @@ static void div_(const Integer* left,
 
     if (cmp_(new_left, tmp_right) >= 0) sub_(new_left, tmp_right, new_left);
     
-    free(tmp);
     free(tmp_right);
   }
 
   if (rem) memcpy(rem, new_left, g_size_integer);
 
+  free(tmp);
   free(new_left);
   free(new_right);
 }

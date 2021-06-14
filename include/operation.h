@@ -15,6 +15,7 @@ Integer* modExponent(const Integer* src,
                      const Integer* exp,
                      const Integer* mod);
 Integer* modInversion(const Integer* src, const Integer* mod);
+Integer* gcdEuclid(const Integer* left, const Integer* right);
 
 
 static void lShift(Integer* src, int n);
