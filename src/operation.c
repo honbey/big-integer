@@ -89,7 +89,7 @@ Integer* modExponent(const Integer* src,
       set_(tmp, 0u);
       div_(dst, mod, tmp, dst);
     }
-    
+
     memcpy(tmp, new_exp, g_size_integer);
     set_(new_exp, 0u);
     div_(tmp, two, new_exp, NULL);
@@ -174,16 +174,17 @@ Integer* modInversion(const Integer* src, const Integer* mod) {
 
     mulDiv_(quot, r3, tmp);
     plusMinus_(t3, tmp, 1, r3);
-    
+
     memcpy(t1, tmp1, g_size_integer);
     memcpy(t2, tmp2, g_size_integer);
     memcpy(t3, tmp3, g_size_integer);
   }
-  
+
   Integer* dst = initInteger();
   div_(t1, mod, dst, dst);
 
   if (t1->sign) {
+    dst->sign = 0;
     memcpy(tmp, dst, g_size_integer);
     sub_(mod, tmp, dst);
   }
