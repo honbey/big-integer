@@ -10,6 +10,7 @@ Integer* mulDiv(const Integer* left,
                 const Integer* right,
                 int op,
                 Integer* rem);
+
 Integer* modExponent(const Integer* src,
                      const Integer* exp,
                      const Integer* mod);

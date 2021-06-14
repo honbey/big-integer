@@ -139,6 +139,7 @@ void mulDiv_(const Integer* left, const Integer* right, Integer* dst) {
   dst->sign = left->sign ^ right->sign;
 }
 
+/* Extended Euclid Algorithm */
 Integer* modInversion(const Integer* src, const Integer* mod) {
   Integer* t1 = toInteger(1);
   Integer* t2 = toInteger(0);
@@ -181,7 +182,7 @@ Integer* modInversion(const Integer* src, const Integer* mod) {
   
   Integer* dst = initInteger();
   div_(t1, mod, dst, dst);
-  
+
   if (t1->sign) {
     memcpy(tmp, dst, g_size_integer);
     sub_(mod, tmp, dst);
