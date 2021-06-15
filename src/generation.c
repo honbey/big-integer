@@ -1,5 +1,6 @@
 #include "generation.h"
 #include "operation.h"
+#include "op_int.h"
 
 
 Integer* generateInteger(int bits) {
@@ -14,6 +15,24 @@ Integer* generateInteger(int bits) {
 
   dst->data[bits/BIN_EXP_BASE-1] = rand() & 0xffffu + 0x10000u;
   dst->data[0] |= 0x1u;
+  return dst;
+}
+
+Integer* str2Integer(const char* src) {
+  Integer* bit = toInteger(1);
+  Integer* tmp = initInteger();
+  Integer* dst = initInteger();
+
+  int len = strlen(src);
+  for (int i = len-1; i >= 0; --i) {
+    memcpy(tmp, bit, g_size_integer);
+    mulUint32(tmp, (uint)(src[i] - '0'));
+    doPlusMinus(dst, tmp, 0, dst);
+    mulUint32(bit, 10u);
+  }
+
+  free(bit);
+  free(tmp);
   return dst;
 }
 
