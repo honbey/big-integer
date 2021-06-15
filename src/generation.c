@@ -29,8 +29,9 @@ void printInteger(const Integer* src, int base) {
     memcpy(tmp, src, g_size_integer);
 
     char char_table[] = "0123456789ABCDEF";
-    char *str = (char *)malloc(sizeof(char) * 2048);
-    memset(str, 0, sizeof(char) * 2048);
+    size_t size = sizeof(char) * (size_t)(src->length * BIN_EXP_BASE * 0.33);
+    char *str = (char *)malloc(size);
+    memset(str, 0, sizeof(size));
     int i = 0;
     for (; tmp->length > 1 || tmp->data[0] != 0; ++i) 
       str[i] = char_table[modUint32(tmp, base, tmp)];
