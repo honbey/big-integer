@@ -11,11 +11,23 @@ Integer* mulDiv(const Integer* left,
                 int op,
                 Integer* rem);
 
+/* if use function `doX()`, please make sure `dst != left or right` */
+void doPlusMinus(const Integer* left,
+                const Integer* right,
+                int sign,
+                Integer* dst);
+void doMulDiv(const Integer* left,
+              const Integer* right,
+              int op,
+              Integer* dst);
+
 Integer* modExponent(const Integer* src,
                      const Integer* exp,
                      const Integer* mod);
+
 Integer* modInversion(const Integer* src, const Integer* mod);
 Integer* gcdEuclid(const Integer* left, const Integer* right);
+int primalityMillerRabin(const Integer* src);
 
 
 static void lShift(Integer* src, int n);

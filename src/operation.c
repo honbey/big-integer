@@ -63,6 +63,46 @@ Integer* mulDiv(const Integer* left,
   return dst;
 }
 
+void doPlusMinus(const Integer* left,
+                const Integer* right,
+                int sign,
+                Integer* dst) {
+  int sign_xor = (left->sign ^ sign) ^ right->sign;
+  if (sign_xor) {
+    int cmp_value = cmp_(left, right);
+    dst->sign = cmp_value * (((cmp_value-1) / 2) + left->sign);
+    if (cmp_value == 0) set_(dst, 0u);
+    else if (cmp_value ==  1) sub_(left, right, dst);
+    else if (cmp_value == -1) sub_(right, left, dst);
+  } else {
+    if (left->length < right->length) add_(right, left, dst);
+    else add_(left, right, dst);
+    dst->sign = left->sign;
+  }
+}
+
+void doMulDiv(const Integer* left,
+              const Integer* right,
+              int op,
+              Integer* dst) {
+  memset(dst->data, 0, g_size_uint * INT_LEN);
+
+  if (op) {
+    dst->length = 1;
+    if (isOne_(right) == 0) memcpy(dst, left, g_size_integer);
+    else if (isZero_(right) == 0) 
+      printf("\n*Error: The dividend is zero, program will return zero.*\n");
+    else div_(left, right, dst, NULL);
+  } else {
+    if (isZero_(left) == 0 || isZero_(right) == 0) set_(dst, 0u);
+    else if (isOne_(left) == 0) memcpy(dst, right, g_size_integer);
+    else if (isOne_(right) == 0) memcpy(dst, left, g_size_integer);
+    else mul_(left, right, dst);
+  }
+
+  dst->sign = left->sign ^ right->sign;
+}
+
 Integer* modExponent(const Integer* src,
                      const Integer* exp,
                      const Integer* mod) {
@@ -110,35 +150,6 @@ Integer* modExponent(const Integer* src,
   return dst;
 }
 
-void plusMinus_(const Integer* left,
-                const Integer* right,
-                int sign,
-                Integer* dst) {
-  int sign_xor = (left->sign ^ sign) ^ right->sign;
-  if (sign_xor) {
-    int cmp_value = cmp_(left, right);
-    dst->sign = cmp_value * (((cmp_value-1) / 2) + left->sign);
-    if (cmp_value == 0) set_(dst, 0u);
-    else if (cmp_value ==  1) sub_(left, right, dst);
-    else if (cmp_value == -1) sub_(right, left, dst);
-  } else {
-    if (left->length < right->length) add_(right, left, dst);
-    else add_(left, right, dst);
-    dst->sign = left->sign;
-  }
-}
-
-void mulDiv_(const Integer* left, const Integer* right, Integer* dst) {
-  memset(dst->data, 0, g_size_uint * INT_LEN);
-
-  if (isZero_(left) == 0 || isZero_(right) == 0) set_(dst, 0u);
-  else if (isOne_(left) == 0) memcpy(dst, right, g_size_integer);
-  else if (isOne_(right) == 0) memcpy(dst, left, g_size_integer);
-  else mul_(left, right, dst);
-
-  dst->sign = left->sign ^ right->sign;
-}
-
 /* Extended Euclid Algorithm */
 Integer* modInversion(const Integer* src, const Integer* mod) {
   Integer* t1 = toInteger(1);
@@ -166,14 +177,14 @@ Integer* modInversion(const Integer* src, const Integer* mod) {
     memcpy(tmp2, r2, g_size_integer);
     memcpy(tmp3, r3, g_size_integer);
 
-    mulDiv_(quot, r1, tmp);
-    plusMinus_(t1, tmp, 1, r1);
+    doMulDiv(quot, r1, 0, tmp);
+    doPlusMinus(t1, tmp, 1, r1);
 
-    mulDiv_(quot, r2, tmp);
-    plusMinus_(t2, tmp, 1, r2);
+    doMulDiv(quot, r2, 0, tmp);
+    doPlusMinus(t2, tmp, 1, r2);
 
-    mulDiv_(quot, r3, tmp);
-    plusMinus_(t3, tmp, 1, r3);
+    doMulDiv(quot, r3, 0, tmp);
+    doPlusMinus(t3, tmp, 1, r3);
 
     memcpy(t1, tmp1, g_size_integer);
     memcpy(t2, tmp2, g_size_integer);
@@ -224,4 +235,8 @@ Integer* gcdEuclid(const Integer* left, const Integer* right) {
   free(new_left);
 
   return new_right;
+}
+
+int primalityMillerRabin(const Integer* src) {
+  return 0;
 }
