@@ -1,5 +1,5 @@
 # Project Name
-PROJECT(Integer)
+PROJECT(BigInteger)
 # CMake Version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 

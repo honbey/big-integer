@@ -1,4 +1,4 @@
-# Integer
+# Big Integer
 
 Big integer operation.
 
