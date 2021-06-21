@@ -38,12 +38,10 @@ Integer* str2Integer(const char* src) {
 
 void printInteger(const Integer* src, int base) {
   if (base < 0 || 16 < base) base = 16;
+  if (src->sign) printf("-");
   if (src->length == 1) {
-    if (src->sign) printf("%c", '-');
     printf("%u\n", src->data[0]);
   } else {
-    if (src->sign) printf("-");
-
     Integer* tmp = (Integer* )malloc(g_size_integer);
     memcpy(tmp, src, g_size_integer);
 
