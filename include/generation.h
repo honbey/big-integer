@@ -9,7 +9,7 @@ Integer* generateInteger(int bits);
 Integer* str2Integer(const char* src);
 
 void printInteger(const Integer* src, int base);
-uint modUint32(const Integer* left, uint right, Integer* dst);
+uint toBase(const Integer* left, uint right, Integer* dst);
 
 
 static Integer* initInteger();

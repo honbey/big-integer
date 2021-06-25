@@ -51,7 +51,7 @@ void printInteger(const Integer* src, int base) {
     memset(str, 0, sizeof(size));
     int i = 0;
     for (; tmp->length > 1 || tmp->data[0] != 0; ++i) 
-      str[i] = char_table[modUint32(tmp, base, tmp)];
+      str[i] = char_table[toBase(tmp, base, tmp)];
     for (int j = i-1; j >= 0; --j) printf("%c", str[j]);
     printf("\n");
     free(tmp);
@@ -59,19 +59,19 @@ void printInteger(const Integer* src, int base) {
   }
 }
 
-uint modUint32(const Integer* left, uint right, Integer* dst) {
+uint toBase(const Integer* left, uint right, Integer* dst) {
   uint remainder = 0;
-  ulong tmp = 0;
-  uint *div = (uint *)(&tmp);
+  ulong div = 0;
+  uint *tmp = (uint *)(&div);
 
   Integer* new_left = (Integer* )malloc(g_size_integer);
   memcpy(new_left, left, g_size_integer);
 
   for (int i = new_left->length-1; i >= 0; --i) {
-    div[0] = new_left->data[i];
-    div[1] = remainder;
-    dst->data[i] = (uint)(tmp / (ulong)right);
-    remainder = (uint)(tmp - (ulong)(dst->data[i]) * (ulong)right);
+    tmp[0] = new_left->data[i];
+    tmp[1] = remainder;
+    dst->data[i] = (uint)(div / (ulong)right);
+    remainder = (uint)(div - (ulong)(dst->data[i]) * (ulong)right);
   }
 
   dst->length = new_left->length;
