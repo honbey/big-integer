@@ -62,7 +62,7 @@ void divUint32(Integer* left, uint right) {
     l = r;
     l = (l << 32) + (ulong)left->data[i];
     left->data[i] = (uint)(l / (ulong)right);
-    r = l - (ulong)left->data[i] * right;
+    r = l - (ulong)left->data[i] * (ulong)right;
   }
 
   if (left->data[left->length-1] == 0) left->length -= 1;
