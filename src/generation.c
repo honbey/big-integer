@@ -41,9 +41,8 @@ Integer* generatePrimeInteger(int bits) {
   while (1) {
     p = generateInteger(bits);
     if (primalityFermat(p)) free(p);
-    else break;
+    else return p;
   }
-  return p;
 }
 
 void printInteger(const Integer* src, int base) {
