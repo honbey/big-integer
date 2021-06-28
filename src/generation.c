@@ -36,6 +36,16 @@ Integer* str2Integer(const char* src) {
   return dst;
 }
 
+Integer* generatePrimeInteger(int bits) {
+  Integer* p = NULL;
+  while (1) {
+    p = generateInteger(bits);
+    if (primalityFermat(p)) free(p);
+    else break;
+  }
+  return p;
+}
+
 void printInteger(const Integer* src, int base) {
   if (base < 0 || 16 < base) base = 16;
   if (src->sign) printf("-");

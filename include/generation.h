@@ -7,6 +7,8 @@
 
 Integer* generateInteger(int bits);
 Integer* str2Integer(const char* src);
+Integer* generatePrimeInteger(int bits);
+
 
 void printInteger(const Integer* src, int base);
 uint toBase(const Integer* left, uint right, Integer* dst);
