@@ -1,6 +1,7 @@
 #include "generation.h"
 #include "operation.h"
 #include "op.h"
+#include "op_int.h"
 
 
 Integer* plusMinus(const Integer* left, const Integer* right, int sign) {
@@ -237,6 +238,33 @@ Integer* gcdEuclid(const Integer* left, const Integer* right) {
   return new_right;
 }
 
-int primalityMillerRabin(const Integer* src) {
+int primalityFermat(const Integer* src) {
+  Integer* tmp = (Integer* )malloc(g_size_integer);
+  for (int i = 0; i < 1000; ++i) {
+    set_(tmp, prime_table[i]);
+    div_(src, tmp, tmp, tmp);
+    if (isZero_(tmp) == 0) {
+      free(tmp);
+      return 1;
+    }
+  }
+
+  memcpy(tmp, src, g_size_integer);
+  subUint32(tmp, 1u);
+  for (int i = 0; i < 10; ++i) {
+    int len = rand() % (src->length-2) + 1;
+    Integer* b = generateInteger(len * BIN_EXP_BASE);
+    Integer* r = modExponent(b, tmp, src);
+    if (isOne_(r) != 0) { /* r != 1 */
+      free(b);
+      free(r);
+      free(tmp);
+      return 1;
+    }
+    free(b);
+    free(r);
+  }
+
+  free(tmp);
   return 0;
 }

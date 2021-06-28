@@ -27,7 +27,8 @@ Integer* modExponent(const Integer* src,
 
 Integer* modInversion(const Integer* src, const Integer* mod);
 Integer* gcdEuclid(const Integer* left, const Integer* right);
-int primalityMillerRabin(const Integer* src);
+
+int primalityFermat(const Integer* src);
 
 
 static void lShift(Integer* src, int n);
