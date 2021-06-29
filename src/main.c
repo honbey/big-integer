@@ -29,17 +29,17 @@ void rsaTest(void) {
   Integer* message = toInteger(20210615);
   printf("Message   : ");
   printInteger(message, 10);
-  Integer* cipherText = modExponent(message, rsa_params[1], rsa_params[0]);
+  Integer* ciphertext = modExponent(message, rsa_params[1], rsa_params[0]);
   printf("CipherText: ");
-  printInteger(cipherText, 10);
-  Integer* plainText = modExponent(cipherText, rsa_params[2], rsa_params[0]);
+  printInteger(ciphertext, 10);
+  Integer* plaintext = modExponent(ciphertext, rsa_params[2], rsa_params[0]);
   printf("PlainText : ");
-  printInteger(plainText, 10);
+  printInteger(plaintext, 10);
 
   for (int i = 0; i < 3; ++i) free(rsa_params[i]);
   free(rsa_params);
 
   free(message);
-  free(cipherText);
-  free(plainText);
+  free(ciphertext);
+  free(plaintext);
 }

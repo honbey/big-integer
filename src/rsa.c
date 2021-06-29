@@ -15,6 +15,7 @@ Integer** initRSAParams(int bits, int args) {
   /* $phi$(n) = (p-1)(q-1) */
   Integer* n_ = mulDiv(p, q, 0, NULL);
   /* public key,  e */
+  /* you can choose 65537 as public key by `params[1] = toInteger(65537);` */
   params[1] = generatePrimeInteger(bits >> 2);
   /* private key, d */
   params[2] = modInversion(params[1], n_);
