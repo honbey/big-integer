@@ -22,7 +22,7 @@ void rsaTest(void) {
 /*
 * rsa_params[0]: n             (Public)
 * rsa_params[1]: e Public  Key (Public)
-* rsa_params[2]: d Private Key (Public)
+* rsa_params[2]: d Private Key
 */
   rsa_params = initRSAParams(1024, 3);
 
