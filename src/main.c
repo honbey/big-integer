@@ -18,7 +18,7 @@ int main(int argc, char const *argv[]) {
 }
 
 void rsaTest(int flag) {
-  Integer** rsa_params = initRSAParams(1024, 3);
+  Integer** rsa_params = initRSAParams(1024, VERBOSE | DECIMAL);
 /*
 * rsa_params[0]: n             (Public)
 * rsa_params[1]: e Public  Key (Public)
