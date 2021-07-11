@@ -8,4 +8,11 @@
 
 Integer** initRSAParams(int bits, int args);
 
+typedef uint8_t uchar;
+
+uchar* RSA(const uchar* message,
+           int* length,
+           const Integer* key,
+           const Integer* n);
+
 #endif

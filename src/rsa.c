@@ -44,3 +44,36 @@ Integer** initRSAParams(int bits, int args) {
 
   return params;
 }
+
+uchar* RSA(const uchar* message,
+           int* length,
+           const Integer* key,
+           const Integer* n) {
+/*
+  uchar* text = (uchar* )malloc(sizeof(uchar) * length);
+  for (int i = 0; i < length; ++i) text[i] = (uchar)message[i];
+*/
+
+  int int_length = *length / 4 + ((*length % 4) ? 1 : 0);
+
+  Integer* int_text = initInteger();
+  int_text->length = int_length;
+  memcpy(int_text->data, message, sizeof(uchar) * *length);
+
+  Integer* sub_text = modExponent(int_text, key, n);
+
+  uint s = sub_text->data[sub_text->length-1];
+  int l = 1;
+  if (s > 0x00ffffffu) l = 4;
+  else if (s > 0x0000ffffu) l = 3;
+  else if (s > 0x000000ffu) l = 2;
+
+  *length = (sub_text->length-1) * 4 + l;
+
+  uchar* sub_message = (uchar* )malloc(sizeof(uchar) * *length);
+  memcpy(sub_message, sub_text->data, sizeof(uchar) * *length);
+
+  free(int_text);
+  free(sub_text);
+  return sub_message;
+}
