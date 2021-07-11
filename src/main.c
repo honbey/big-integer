@@ -36,13 +36,12 @@ int main(int argc, char const *argv[]) {
 }
 
 void rsaTest(void) {
-  Integer** rsa_params = NULL;
+  Integer** rsa_params = initRSAParams(1024, 3);
 /*
 * rsa_params[0]: n             (Public)
 * rsa_params[1]: e Public  Key (Public)
 * rsa_params[2]: d Private Key
 */
-  rsa_params = initRSAParams(1024, 3);
 
   Integer* message = toInteger(20210615);
   printf("Message   : ");
