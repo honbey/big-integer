@@ -15,4 +15,6 @@ uchar* RSA(const uchar* message,
            const Integer* key,
            const Integer* n);
 
+uchar* char2Uchar(const char* message, int length);
+
 #endif

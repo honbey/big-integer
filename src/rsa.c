@@ -49,11 +49,6 @@ uchar* RSA(const uchar* message,
            int* length,
            const Integer* key,
            const Integer* n) {
-/*
-  uchar* text = (uchar* )malloc(sizeof(uchar) * length);
-  for (int i = 0; i < length; ++i) text[i] = (uchar)message[i];
-*/
-
   int int_length = *length / 4 + ((*length % 4) ? 1 : 0);
 
   Integer* int_text = initInteger();
@@ -76,4 +71,10 @@ uchar* RSA(const uchar* message,
   free(int_text);
   free(sub_text);
   return sub_message;
+}
+
+uchar* char2Uchar(const char* message, int length) {
+  uchar* text = (uchar* )malloc(sizeof(uchar) * length);
+  for (int i = 0; i < length; ++i) text[i] = (uchar)message[i];
+  return text;
 }
