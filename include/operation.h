@@ -13,9 +13,9 @@ Integer* mulDiv(const Integer* left,
 
 /* if use function `doX()`, please make sure `dst != left or right` */
 void doPlusMinus(const Integer* left,
-                const Integer* right,
-                int sign,
-                Integer* dst);
+                 const Integer* right,
+                 int sign,
+                 Integer* dst);
 void doMulDiv(const Integer* left,
               const Integer* right,
               int op,
