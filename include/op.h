@@ -160,7 +160,7 @@ static void div_(const Integer* left,
     memcpy(quot, tmp, g_size_integer);
 
  /* because division use multiplication, it's necessary 
-  * to prevent the disturbution of _dst_'s original data.*/
+  * to prevent the disturbance of _dst_'s original data.*/
     set_(tmp, 0u);
     mul_(new_right, tmp_right, tmp);
     memcpy(tmp_right, tmp, g_size_integer);
