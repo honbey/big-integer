@@ -139,3 +139,5 @@ integer
 test
 a
 use.py
+Debug/
+.cache/
