@@ -92,7 +92,7 @@ void mul_(const Integer *left, const Integer *right, Integer *dst) {
   }
 }
 void div_(const Integer *left, const Integer *right, Integer *quot,
-                 Integer *rem) {
+          Integer *rem) {
   Integer *new_left = (Integer *)malloc(g_size_integer);
   memcpy(new_left, left, g_size_integer);
   Integer *new_right = (Integer *)malloc(g_size_integer);
