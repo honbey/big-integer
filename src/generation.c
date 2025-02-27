@@ -12,7 +12,7 @@ Integer *generateInteger(int bits) {
     dst->data[i] = rand();
   }
 
-  dst->data[bits / BIN_EXP_BASE - 1] = rand() & 0xffffu + 0x10000u;
+  dst->data[bits / BIN_EXP_BASE - 1] = (rand() & 0xffffu) + 0x10000u;
   dst->data[0] |= 0x1u;
   return dst;
 }
