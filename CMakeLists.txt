@@ -1,7 +1,7 @@
+# CMake Version
+CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 # Project Name
 PROJECT(BigInteger)
-# CMake Version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
 # SET(CMAKE_BUILD_TYPE "Debug")
 # SET(SRC_LIST src/main.cpp)
