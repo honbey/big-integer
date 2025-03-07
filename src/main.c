@@ -2,16 +2,16 @@
 extern "C"
 #endif
 
+#include <time.h>
+
 #include "integer.h"
 #include "rsa.h"
-
-#include <time.h>
 
     void
     rsaTest(int flag);
 
 int main(int argc, char const *argv[]) {
-  //  srand((unsigned)time(0));
+  srand((unsigned)time(0));
 
   rsaTest(2);
 
