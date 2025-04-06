@@ -1,17 +1,20 @@
 # CMake Version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
+cmake_minimum_required(VERSION 4.0)
 # Project Name
-PROJECT(BigInteger)
+project(BigInteger)
 
-# SET(CMAKE_BUILD_TYPE "Debug")
-# SET(SRC_LIST src/main.cpp)
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
+# Export compile_commands.json for Neovim IDE
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# set(CMAKE_BUILD_TYPE "Debug")
+# set(SRC_LIST src/main.cpp)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 
 # Add Source Files
-AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src DIR_SRCS)
+aux_source_directory(${PROJECT_SOURCE_DIR}/src DIR_SRCS)
 # Add header files
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include)
 # Add link library
-# LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/lib)
+# link_directories(${PROJECT_SOURCE_DIR}/lib)
 
-ADD_EXECUTABLE(${PROJECT_NAME} ${DIR_SRCS})
+add_executable(${PROJECT_NAME} ${DIR_SRCS})
